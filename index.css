@@ -1,3 +1,262 @@
-#heading {
-    color: rebeccapurple;
+.header {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  background-color: #f5f5dc;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  align-items: center;
+}
+
+.header-logo {
+  width: 100px;
+  height: 100px;
+}
+
+.header-nav-items > ul {
+  display: flex;
+  font-size: 18px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header-nav-items > ul > li {
+  padding: 10px 15px;
+  margin: 5px;
+  align-self: center;
+  border-radius: 5px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.header-nav-items > ul > li:hover {
+  cursor: pointer;
+}
+
+.login-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: gray;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient animation */
+.login-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover: Change background to light orange, add a glow effect */
+.login-button:hover {
+  background-color: #ffa500;
+  box-shadow: 0 6px 16px rgba(255, 165, 0, 0.3);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Add glossy shine effect on hover */
+.login-button:hover::before {
+  left: 100%;
+}
+
+/* Active: Pressed effect */
+.login-button:active {
+  background-color: #ffa500;
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.body {
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+  padding: 20px;
+  background-color: #f5f5dc; /* Lighter shade of beige */
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.restaurant-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.restaurant-card {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background: linear-gradient(to bottom, yellow 50%, orange 50%);
+  overflow: hidden;
+}
+
+.restaurant-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.restaurant-card-image {
+  width: 100%;
+  height: 200px;
+  border-bottom: 1px solid #ddd;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}
+
+.restaurant-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.restaurant-card:hover .restaurant-image {
+  transform: scale(1.1);
+}
+
+.restaurant-card-details {
+  padding: 10px;
+  background-color: #333;
+  border-radius: 0 0 10px 10px;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-grow: 1;
+  transition: background-color 0.3s;
+  height: auto; /* Adjust height based on content */
+}
+
+.restaurant-card-details:hover {
+  background-color: #444;
+}
+
+.restaurant-card-details > p {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-button {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  background-color: #666;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.search-button:hover {
+  background-color: #ffa500; /* Light orange */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.shimmer-parent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #f5f5dc;
+}
+
+.shimmer-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 250px;
+  margin: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.shimmer-image,
+.shimmer-name,
+.shimmer-ratings,
+.shimmer-location {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 5px;
+  margin: 10px 10px 0 10px;
+}
+
+.shimmer-image {
+  width: 90%;
+  height: 200px;
+}
+
+.shimmer-name {
+  width: 50%;
+  height: 20px;
+}
+
+.shimmer-ratings {
+  width: 80%;
+  height: 20px;
+}
+
+.shimmer-location {
+  width: 60%;
+  height: 20px;
 }
