@@ -2,21 +2,33 @@ import { IMG_CDN_URL } from "../utils/constants";
 import { Link } from "react-router";
 
 const MealOptions = ({ data }) => {
+  console.log(data);
   const title = data?.card?.card?.header?.title || "No Title Available";
   const foodItems = data?.card?.card?.imageGridCards?.info || [];
 
-  const extractParams = (entityId) => {
-    if (!entityId || !entityId.startsWith("swiggy://")) return {};
+  const extractParams = (link) => {
+    if (!link) return {}; // Return empty if no link provided
 
     try {
-      const url = new URL(entityId.replace("swiggy://", "https://"));
+      const url = new URL(link);
       const params = new URLSearchParams(url.search);
+
+      // Extract collection ID (priority: query param > path segment)
+      const collectionIdFromParams = params.get("collection_id");
+      const collectionIdFromPath = url.pathname
+        .split("/")
+        .filter(Boolean)
+        .pop();
+
+      // Extract tag (only from query params)
+      const tag = params.get("tags");
+
       return {
-        collectionId: params.get("collection_id"),
-        tag: params.get("tags"),
+        collectionId: collectionIdFromParams || collectionIdFromPath,
+        tag: tag,
       };
     } catch (error) {
-      console.error("Error parsing URL:", error);
+      console.error("Error parsing link URL:", error);
       return {};
     }
   };
@@ -29,7 +41,7 @@ const MealOptions = ({ data }) => {
       >
         {foodItems.length > 0 ? (
           foodItems.map((item) => {
-            const { collectionId, tag } = extractParams(item?.entityId);
+            const { collectionId, tag } = extractParams(item?.action?.link);
             return (
               <div
                 key={item.id}

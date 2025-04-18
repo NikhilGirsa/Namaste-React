@@ -1,7 +1,7 @@
 import { API_URL } from "../utils/constants";
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
-import RestaurantShimmer from "./RestaurantShimmer";
+import RestaurantShimmer from "./Shimmer/RestaurantShimmer";
 import MealOptions from "./MealOptions";
 
 const Body = () => {
