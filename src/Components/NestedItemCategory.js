@@ -1,6 +1,5 @@
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import MenuItem from "./MenuItem";
-import { useState } from "react";
 import useToggle from "../hooks/useToggle";
 
 const NestedItemCategory = ({ data }) => {
@@ -20,7 +19,7 @@ const NestedItemCategory = ({ data }) => {
                   {subcategory?.title} ({subcategory?.itemCards?.length})
                 </h3>
                 <button onClick={toggle} className="cursor-pointer">
-                  {isOpen ? <FaChevronDown /> : <FaChevronUp />}
+                  {isOpen ? <FaChevronUp /> : <FaChevronDown />}
                 </button>
               </div>
               <ul className="list-disc px-2 space-y-2">

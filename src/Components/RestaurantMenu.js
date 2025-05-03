@@ -52,7 +52,6 @@ const RestaurantMenu = () => {
           item?.card?.card["@type"]?.includes("food.v2.Restaurant")
         )?.card?.card?.info;
 
-        console.log(info);
         setResInfo(info);
         setResMenu(organisedMenuData);
       } catch (error) {

@@ -6,10 +6,7 @@ const RestaurantCard = ({ restaurantData }) => {
     restaurantData?.info;
 
   return (
-    <Link
-      to={`/restaurant/menu/${id}`}
-      onClick={() => console.log(`Clicked with id: ${id}`)}
-    >
+    <Link to={`/restaurant/menu/${id}`}>
       <div key={id} className="restaurant-card">
         <div className="restaurant-card-image">
           <img

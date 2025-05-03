@@ -2,87 +2,56 @@ import { IMG_CDN_URL } from "../utils/constants";
 import { Link } from "react-router";
 
 const MealOptions = ({ data }) => {
-  console.log(data);
-  const title = data?.card?.card?.header?.title || "No Title Available";
+  const title = data?.card?.card?.header?.title || "What's on your mind?";
   const foodItems = data?.card?.card?.imageGridCards?.info || [];
 
   const extractParams = (link) => {
-    if (!link) return {}; // Return empty if no link provided
-
+    if (!link) return {};
     try {
       const url = new URL(link);
       const params = new URLSearchParams(url.search);
-
-      // Extract collection ID (priority: query param > path segment)
-      const collectionIdFromParams = params.get("collection_id");
-      const collectionIdFromPath = url.pathname
-        .split("/")
-        .filter(Boolean)
-        .pop();
-
-      // Extract tag (only from query params)
+      const collectionId =
+        params.get("collection_id") ||
+        url.pathname.split("/").filter(Boolean).pop();
       const tag = params.get("tags");
-
-      return {
-        collectionId: collectionIdFromParams || collectionIdFromPath,
-        tag: tag,
-      };
+      return { collectionId, tag };
     } catch (error) {
-      console.error("Error parsing link URL:", error);
+      console.error("Error parsing link:", error);
       return {};
     }
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "20px" }}>{title}</h1>
-      <div
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-      >
+    <div className="px-4 py-6 max-w-6xl mx-auto">
+      <h1 className="text-xl font-bold mb-6 text-gray-800">
+        {title.startsWith("What's") ? title : `Nikhil, ${title.toLowerCase()}`}
+      </h1>
+
+      <div className="flex overflow-x-auto pb-4 scrollbar-hide gap-8">
         {foodItems.length > 0 ? (
           foodItems.map((item) => {
             const { collectionId, tag } = extractParams(item?.action?.link);
             return (
-              <div
-                key={item.id}
-                style={{
-                  margin: "20px",
-                  textAlign: "center",
-                  maxWidth: "150px",
-                }}
-              >
+              <div key={item.id} className="flex-shrink-0 w-28">
                 <Link
                   to={`/details/${collectionId}`}
-                  state={{
-                    collectionId,
-                    tag,
-                  }}
+                  state={{ collectionId, tag }}
+                  className="block"
                 >
-                  <img
-                    src={IMG_CDN_URL + item.imageId}
-                    alt={item.accessibility?.altText || "Food Item"}
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "10px",
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                      marginBottom: "10px",
-                      transition: "transform 0.2s",
-                      cursor: "pointer",
-                    }}
-                    onMouseOver={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseOut={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
-                  />
+                  <div className="relative group">
+                    <img
+                      src={IMG_CDN_URL + item.imageId}
+                      alt={item.accessibility?.altText || item.action?.text}
+                      className="w-24 h-28 object-cover rounded-lg shadow-md hover:shadow-lg transition-all duration-200 bg-white p-1"
+                    />
+                    <div className="absolute inset-0 rounded-lg bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200" />
+                  </div>
                 </Link>
               </div>
             );
           })
         ) : (
-          <p>No food items available.</p>
+          <p className="text-gray-500">No food items available</p>
         )}
       </div>
     </div>

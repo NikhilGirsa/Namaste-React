@@ -1,85 +1,74 @@
-import { API_URL } from "../utils/constants";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useRestaurantData } from "../hooks/useRestaurantData";
 import RestaurantCard from "./RestaurantCard";
+import TopRestaurantChains from "./TopRestaurantChains";
 import RestaurantShimmer from "./Shimmer/RestaurantShimmer";
 import MealOptions from "./MealOptions";
+import SearchBar from "./SearchBar"; // New component
 
 const Body = () => {
-  const [restaurantList, setRestaurantList] = useState([]);
+  const { mealOptions, topRestaurants, restaurantList, isLoading, error } =
+    useRestaurantData();
+
+  console.log(topRestaurants);
+
   const [filteredList, setFilteredList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [mealOptions, setMealOptions] = useState([]);
 
-  // Fetch data on component mount
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const jsonData = await response.json();
-
-        const meal = jsonData?.data?.cards?.[0];
-        setMealOptions(meal);
-
-        const restaurants =
-          jsonData?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
-            ?.restaurants ?? [];
-        setRestaurantList(restaurants);
-        setFilteredList(restaurants);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
+    const timer = setTimeout(() => {
+      if (!searchValue.trim()) {
+        setFilteredList(restaurantList);
+        return;
       }
-    };
 
-    fetchData();
-  }, []);
-
-  // Debounced search handler
-  useEffect(() => {
-    const debounceSearch = setTimeout(() => {
-      const filteredRestaurant = restaurantList.filter((restaurant) =>
+      const filtered = restaurantList.filter((restaurant) =>
         restaurant?.info?.name
           ?.toLowerCase()
           .includes(searchValue.toLowerCase())
       );
-      setFilteredList(filteredRestaurant);
+      setFilteredList(filtered);
     }, 300);
 
-    return () => clearTimeout(debounceSearch);
+    return () => clearTimeout(timer);
   }, [searchValue, restaurantList]);
 
-  // Render loading shimmer or main content
-  if (restaurantList.length === 0) {
-    return <RestaurantShimmer />;
-  }
+  if (isLoading) return <RestaurantShimmer />;
+  if (error) return <ErrorFallback error={error} />;
 
   return (
-    <div className="body">
+    <div className="body-container px-4 py-6 max-w-7xl mx-auto">
       <MealOptions data={mealOptions} />
-      <div className="search">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search for restaurants"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <button
-          className="search-button"
-          onClick={() => setSearchValue(searchValue)}
-        >
-          Search
-        </button>
-      </div>
-      <div className="restaurant-cards">
-        {filteredList.map((restaurant) => (
-          <RestaurantCard
-            key={restaurant?.info?.id}
-            restaurantData={restaurant}
-          />
-        ))}
+      <TopRestaurantChains restaurantData={topRestaurants} />
+
+      <SearchBar
+        value={searchValue}
+        onChange={setSearchValue}
+        placeholder="Search for restaurants..."
+      />
+
+      <div className="px-4 py-6 max-w-6xl mx-auto">
+        <h1 className="text-xl font-bold mb-6 text-gray-800">
+          Restaurants with online food delivery in Delhi
+        </h1>
+        <div className="restaurant-grid mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredList.length > 0 ? (
+            filteredList.map((restaurant) => (
+              <RestaurantCard
+                key={restaurant?.info?.id}
+                restaurantData={restaurant}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-lg text-gray-600">
+                {searchValue
+                  ? `No restaurants found for "${searchValue}"`
+                  : "No restaurants available"}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
