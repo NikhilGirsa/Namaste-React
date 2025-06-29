@@ -10,8 +10,6 @@ const Body = () => {
   const { mealOptions, topRestaurants, restaurantList, isLoading, error } =
     useRestaurantData();
 
-  console.log(topRestaurants);
-
   const [filteredList, setFilteredList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 

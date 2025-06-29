@@ -1,25 +1,32 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import Header from "./Components/Header";
 import Body from "./Components/Body";
 import Contact from "./Components/Contact";
 import Error from "./Components/Error";
 import SpecificRestaurants from "./Components/SpecificRestaurants";
 import RestaurantMenu from "./Components/RestaurantMenu";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
+import Cart from "./Components/Cart";
+import store from "./utils/store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GOOGLE_CLIENT_ID } from "./utils/constants";
 
 const AppLayout = () => {
   return (
-    <div>
+    <div className="app">
       <Header />
       <Outlet />
     </div>
   );
 };
 
-const AppRouter = createBrowserRouter([
+const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -30,6 +37,10 @@ const AppRouter = createBrowserRouter([
         element: <Contact />,
       },
       {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
         path: "/restaurant/menu/:resId",
         element: <RestaurantMenu />,
       },
@@ -38,9 +49,17 @@ const AppRouter = createBrowserRouter([
         element: <SpecificRestaurants />,
       },
     ],
-    errorElement: <Error />,
   },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={AppRouter} />);
+
+root.render(
+  <React.StrictMode>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <RouterProvider router={appRouter} />
+      </Provider>
+    </GoogleOAuthProvider>
+  </React.StrictMode>
+);

@@ -12,3 +12,15 @@ export const RESTAURANT_MENU_URL =
 
 export const RESTAURANT_MENU_IMAGE_URL =
   "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/";
+
+export const VEG_IMG_URL =
+  "https://i.pinimg.com/736x/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.jpg";
+
+export const NON_VEG_IMG_URL =
+  "https://cdn.vectorstock.com/i/1000v/00/43/non-vegetarian-sign-veg-logo-symbol-vector-50890043.jpg";
+
+export const RESTAURANT_LOGO_URL =
+  "https://cdn-icons-png.flaticon.com/512/11329/11329060.png";
+
+export const GOOGLE_CLIENT_ID =
+  "328340329884-pno8in33blrqvo5kl9o5hkabd7q0md7m.apps.googleusercontent.com";

@@ -2,7 +2,7 @@ import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import MenuItem from "./MenuItem";
 import useToggle from "../hooks/useToggle";
 
-const NestedItemCategory = ({ data }) => {
+const NestedItemCategory = ({ data, ResInfoData }) => {
   const { title, categories } = data;
 
   return (
@@ -28,6 +28,7 @@ const NestedItemCategory = ({ data }) => {
                     key={item?.card?.info?.id}
                     menuInfo={item?.card?.info}
                     isOpen={isOpen}
+                    ResInfoData={ResInfoData}
                   />
                 ))}
               </ul>

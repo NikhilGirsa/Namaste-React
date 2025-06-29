@@ -2,7 +2,7 @@ import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import MenuItem from "./MenuItem";
 import { useState } from "react";
 
-const ItemCategory = ({ data }) => {
+const ItemCategory = ({ data, ResInfoData }) => {
   const { title, itemCards } = data;
   const [isOpen, setIsOpen] = useState(true);
 
@@ -27,6 +27,7 @@ const ItemCategory = ({ data }) => {
               key={item?.card?.info?.id}
               menuInfo={item?.card?.info}
               isOpen={isOpen}
+              ResInfoData={ResInfoData}
             />
           ))}
         </ul>

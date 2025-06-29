@@ -4,7 +4,6 @@ import { IMG_CDN_URL } from "../utils/constants";
 const topRestaurants = ({ restaurantData }) => {
   const { header, gridElements } = restaurantData;
   const restaurants = gridElements?.infoWithStyle?.restaurants || [];
-  console.log(restaurants);
 
   return (
     <div className="px-4 py-6 max-w-6xl mx-auto">

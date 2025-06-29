@@ -84,9 +84,17 @@ const RestaurantMenu = () => {
       {/* Restaurant Menu Category */}
       {resMenu?.map((category) =>
         category?.type === "item" ? (
-          <ItemCategory key={category?.title} data={category} />
+          <ItemCategory
+            key={category?.title}
+            data={category}
+            ResInfoData={resInfo}
+          />
         ) : (
-          <NestedItemCategory key={category?.title} data={category} />
+          <NestedItemCategory
+            key={category?.title}
+            data={category}
+            ResInfoData={resInfo}
+          />
         )
       )}
     </div>
